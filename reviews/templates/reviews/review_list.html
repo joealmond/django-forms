@@ -1,0 +1,17 @@
+{% extends "reviews/base.html" %}
+
+{% block title %}
+ALL Reviews
+{% endblock title %}
+
+{% block content %}
+<ul>
+    {% comment %} {% for review in reviews %}
+        <li>{{review.user_name}} (Rating: {{review.rating}}</li>
+    {% endfor %} {% endcomment %}
+    {% for review in reviews %}
+    {% comment %} cause in views context_object_name = "reviews" otherwise use object_list {% endcomment %}
+        <li>{{review.user_name}} (Rating: {{review.rating}})</li>
+    {% endfor %}
+</ul>
+{% endblock content %}
