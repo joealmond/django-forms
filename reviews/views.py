@@ -1,33 +1,63 @@
 from urllib import request
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.views import View
 
-from .forms import ReviewForm
+from .forms import ReviewsForm
+from .models import Review
 
 # Create your views here.
 
 
-def review(request):
-    # if request.method == "POST":
-    #     entered_username = request.POST["username"]
+class ReviewView(View):
+    def get(self, request):
+        form = ReviewsForm()
+        return render(request, "reviews/review.html", {
+            "form": form
+        })
 
-    #     # if entered_username == "" and len(entered_username) <= 100:
-    #     #     return render(request, "reviews/review.html", {"has_error": True})
-    #     print(entered_username)
-    #     return HttpResponseRedirect("/thank-you")
-    # return render(request, "reviews/review.html")
-
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
+    def post(self, request):
+        form = ReviewsForm(request.POST)
 
         if form.is_valid():
-            print(form.cleaned_data)
+            form.save()
             return HttpResponseRedirect("/thank-you")
 
-    form = ReviewForm()
-    return render(request, "reviews/review.html", {
-        "form": form
-    })
+        return render(request, "reviews/review.html", {
+            "form": form
+        })
+
+
+# def review(request):
+#     # if request.method == "POST":
+#     #     entered_username = request.POST["username"]
+
+#     #     # if entered_username == "" and len(entered_username) <= 100:
+#     #     #     return render(request, "reviews/review.html", {"has_error": True})
+#     #     print(entered_username)
+#     #     return HttpResponseRedirect("/thank-you")
+#     # return render(request, "reviews/review.html")
+
+#     if request.method == "POST":
+#         form = ReviewsForm(request.POST)
+#         # existing_data = Review.objects.get(pk=1) # for updating data
+#         # form = ReviewsForm(request.POST, intance=existing_data) # for updating data
+
+#         if form.is_valid():
+#             form.save()  # you can cause of modelform
+#             # # print(form.cleaned_data)
+#             # review = Review(
+#             #     user_name=form.cleaned_data["user_name"],
+#             #     review_text=form.cleaned_data["review_text"],
+#             #     rating=form.cleaned_data["rating"])
+#             # review.save()
+#             return HttpResponseRedirect("/thank-you")
+#     else:
+#         form = ReviewsForm()
+
+#     return render(request, "reviews/review.html", {
+#         "form": form
+#     })
 
 
 def thank_you(request):
