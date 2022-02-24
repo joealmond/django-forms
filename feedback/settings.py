@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from re import X
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,7 +126,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# media file storage absolute path
+# media file storage absolute path and media url:
 
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/user-media/"
+
+# session cookie:
+
+# SESSION_COOKIE_AGE = 120 #minutes
